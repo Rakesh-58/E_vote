@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Candidate</title>
+    <link rel="stylesheet" href="assets/css/add.css">
+</head>
+<body>
+    <header>
+        <div class="left-content">
+            <img src="assets/img/ec.png" alt="Logo">
+            <h1>E-vote by Election Commission of India</h1>
+        </div>
+        <div class="right-content">
+            <p>Hello, Admin</p>
+            <form id="logoutForm" action="/logout" method="POST" style="display: none;"></form>
+            <button onclick="document.getElementById('logoutForm').submit()">Logout</button>
+        </div>
+    </header>
+    <section class="bg">
+        <div class="container">
+            <h1>Add Candidate</h1>
+            <form action="/add-candidate" method="POST" onsubmit="return validateAge()">
+              <div class="form-group">
+                <input type="text" id="name" name="name" placeholder="Candidate Name" required>
+              </div>
+              <div class="form-group">
+                <input type="number" id="age" name="age" placeholder="Age" required>
+              </div>
+              <div class="form-group">
+                <input type="text" id="party" name="party" placeholder="Party Name" required>
+              </div>
+              <div class="form-group">
+                <input type="text" id="image_str" name="image_str" placeholder="Candidate Image (Filename)" required>
+              </div>
+              <div class="form-group">
+                <input type="text" id="party_img" name="party_img" placeholder="Party Flag Image (Filename)" required>
+              </div>
+              <div class="form-group">
+                <button type="submit">Add Candidate</button>
+              </div>
+            </form>
+        </div>
+        <div>
+            <a href="/admin.html" class="back-button">Back to Dashboard</a>
+        </div>
+    </section>
+</body>
+<script>
+    function validateAge() {
+      const age = document.getElementById('age').value;
+      if (age < 25) {
+        alert('Candidate must be at least 25 years old.');
+        return false;
+      }
+      return true;
+    }
+  </script>
+</html>

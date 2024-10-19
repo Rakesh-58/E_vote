@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cast Your Vote</title>
+    <link rel="stylesheet" href="assets/css/voter.css">
+</head>
+<body>
+    <header>
+        <img src="assets/img/ec.png" alt="">
+        <h1>E-vote by Election Commission of India</h1>
+    </header>
+    <section class="bg">
+        <div class="container">
+            <h1>Cast Your Vote</h1>
+    
+            <form id="voteForm">
+                <div class="candidates-list" id="candidatesList">
+                    <!-- Candidates will be dynamically injected here -->
+                </div>
+    
+                <div class="vote-section">
+                    <button type="button" class="vote-button" onclick="submitVote()">Vote</button>
+                </div>
+            </form>
+        </div>    
+    </section>    
+    
+    <script>
+        // Fetch candidates from the API
+        fetch('/api/candidates')
+        .then(response => response.json())
+        .then(candidates => {
+            const candidatesListDiv = document.getElementById('candidatesList');
+    
+            // Dynamically create candidate elements with radio buttons
+            candidates.forEach(candidate => {
+                const candidateDiv = document.createElement('div');
+                candidateDiv.className = 'candidate';
+                candidateDiv.innerHTML = `
+                    <img src="./assets/img/${candidate.image_str}" alt="${candidate.name}">
+                    <h5>${candidate.name}</h5>
+                    <img src="./assets/img/${candidate.party_img}" width="70px" height="50px" alt="${candidate.name} Flag" class="flag">
+                    <div class="radio-container">
+                        <input type="radio" id="candidate${candidate.candid}" name="candidate" value="${candidate.candid}" class="radio-button">
+                        <label for="candidate${candidate.candid}">Select</label>
+                    </div>
+                `;
+                candidatesListDiv.appendChild(candidateDiv);
+            });
+        })
+        .catch(error => {
+            console.error('Error fetching candidates:', error);
+        });
+    
+        // Function to handle vote submission
+        function submitVote() {
+            const form = document.getElementById('voteForm');
+            const selectedCandidate = form.candidate.value;
+
+            if (!selectedCandidate) {
+                alert('Please select a candidate to vote for.');
+                return;
+            }
+
+            // Send the selected vote to the server
+            fetch('/vote', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ candidateId: selectedCandidate }),
+            })
+            .then(response => response.text())  // Parse response as text
+            .then(data => {
+                // Replace the entire page content with the HTML from the server
+                document.open();  // Clear the current page
+                document.write(data);  // Write the new HTML from the server
+                document.close();  // Finalize the document
+            })
+            .catch(error => {
+                console.error('Error submitting vote:', error);
+            });
+        }
+
+
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,29 @@
+[
+  {
+    "candid": "c0",
+    "name": "Vijay",
+    "age": 50,
+    "image_str": "Vijay.jpg",
+    "party": "TVK",
+    "party_img": "tvkflag.png",
+    "voteCount": 2
+  },
+  {
+    "candid": "c1",
+    "name": "Udhayanithi Stalin",
+    "age": 44,
+    "image_str": "Udhayanidhi-Stalin.jpg.jpg",
+    "party": "DMK",
+    "party_img": "dmk.jpg",
+    "voteCount": 1
+  },
+  {
+    "candid": "c2",
+    "name": "Kamal Hasan",
+    "age": 73,
+    "image_str": "Kamals.jpg",
+    "party": "MNM",
+    "party_img": "mnm.jpg",
+    "voteCount": 0
+  }
+]

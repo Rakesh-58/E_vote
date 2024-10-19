@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Panel</title>
+    
+    <link rel="stylesheet" href="assets/css/admin.css">
+</head>
+<body>
+    <header>
+        <div class="left-content">
+            <img src="assets/img/ec.png" alt="Logo">
+            <h1>E-vote by Election Commission of India</h1>
+        </div>
+        <div class="right-content">
+            <p><b>Hello, Admin</b></p>
+            <form id="logoutForm" action="/logout" method="POST" style="display: none;"></form>
+            <button onclick="document.getElementById('logoutForm').submit()">Logout</button>
+        </div>
+    </header>
+    <section class="bg">
+        <div class="admin-actions">
+            <h2>Admin Actions</h2>
+            <form action="#" method="GET">
+              <button type="submit" formaction="addCandidate.html">Add Candidate</button>
+              <button type="submit" formaction="addVoter.html">Add Voter</button>
+              <button type="button" onclick="viewResults()">View Results</button>
+            </form>
+            <button id="toggleElection" style="background-color: rgb(17, 198, 0);">Start Election</button>
+        </div>
+    </section>
+    
+</body>
+<script>
+    const toggleElectionButton = document.getElementById('toggleElection');
+    let isElectionActive = false; 
+
+    // Fetch current election state when the page loads
+    window.onload = async function() {
+        const response = await fetch('/get-election-state', {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        });
+
+        if (response.ok) {
+            const data = await response.json();
+            isElectionActive = data.electionActive;
+            updateElectionButtonState();
+        } else {
+            console.error('Error fetching election state');
+        }
+    }
+
+    // Update button text and color based on election state
+    function updateElectionButtonState() {
+        if (isElectionActive) {
+            toggleElectionButton.textContent = 'Stop Election';
+            toggleElectionButton.style.backgroundColor = 'red';  // Red when stopping the election
+        } else {
+            toggleElectionButton.textContent = 'Start Election';
+            toggleElectionButton.style.backgroundColor = 'rgb(17, 198, 0)';  // Green when starting the election
+        }
+    }
+
+    toggleElectionButton.addEventListener('click', async () => {
+        const response = await fetch('/toggle-election', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        });
+
+        if (response.ok) {
+            const data = await response.json();
+            isElectionActive = data.electionActive;
+            updateElectionButtonState(); // Update the button state after toggling
+        } else {
+            alert('Error toggling election state');
+        }
+    });
+
+    function viewResults() {
+        // Redirect to the /viewResults route
+        window.location.href = '/viewResults';
+    }
+</script>
+</html>

@@ -1,0 +1,19 @@
+{
+  "name": "chaincode",
+  "version": "1.0.0",
+  "main": "index.js",
+  "directories": {
+    "lib": "lib"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "fabric-contract-api": "^2.5.7"
+  },
+  "devDependencies": {},
+  "description": ""
+}

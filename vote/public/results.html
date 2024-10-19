@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Candidates Results</title>
+    <link rel="stylesheet" href="assets/css/results.css">
+    <script>
+        function fetchCandidates() {
+            fetch('/api/candidates')
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok');
+                    }
+                    return response.json();
+                })
+                .then(candidates => {
+                    displayCandidates(candidates);
+                })
+                .catch(error => {
+                    console.error('Error fetching candidates:', error);
+                });
+        }
+
+        // Function to display candidates in a table
+        function displayCandidates(candidates) {
+            const tableBody = document.getElementById('candidatesTableBody');
+            const winnerDisplay = document.getElementById('winnerDisplay');
+            tableBody.innerHTML = ''; // Clear existing content
+            
+            let winner = candidates[0]; // Assume first candidate is the winner
+
+            candidates.forEach(candidate => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${candidate.name}</td>
+                    <td>${candidate.voteCount}</td>
+                `;
+                tableBody.appendChild(row);
+
+                // Determine the winner
+                if (candidate.voteCount > winner.voteCount) {
+                    winner = candidate;
+                }
+            });
+
+            // Display the winning candidate's details with image
+            winnerDisplay.innerHTML = `
+                <h2>🏆 Winning Candidate: ${winner.name} (${winner.party})</h2>
+                <img src="assets/img/${winner.image_str}" alt="${winner.name}'s Image" class="winner-image">
+                <p>Votes: ${winner.voteCount}</p>
+            `;
+        }
+
+        // Fetch candidates when the page loads
+        window.onload = fetchCandidates;
+    </script>
+</head>
+<body>
+    
+    <header>
+        <div class="left-content">
+            <img src="assets/img/ec.png" alt="Logo">
+            <h1>E-vote by Election Commission of India</h1>
+        </div>
+        <div class="right-content">
+            <p><b>Hello, Admin</b></p>
+            <form id="logoutForm" action="/logout" method="POST" style="display: none;"></form>
+            <button onclick="document.getElementById('logoutForm').submit()">Logout</button>
+        </div>
+    </header>
+    <section class="bg">
+        <div class="container">
+            <h1>Election Results</h1>
+            <div id="winnerDisplay" class="winner">
+                <!-- Winning candidate will be displayed here -->
+            </div>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Candidate Name</th>
+                        <th>Vote Count</th>
+                    </tr>
+                </thead>
+                <tbody id="candidatesTableBody">
+                    <!-- Candidates will be dynamically added here -->
+                </tbody>
+            </table>
+        </div>
+        
+        <div>
+            <a href="/admin.html" class="back-button">Back to Dashboard</a>
+        </div>
+        <audio controls autoplay>
+            <source src="assets/tvk.mp3" type="audio/mpeg">
+            Your browser does not support the audio element.
+        </audio>
+    </section>
+
+    <style>
+        /* Additional styles for the winning candidate image */
+        .winner {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .winner-image {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            margin-top: 10px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        th, td {
+            padding: 12px 15px;
+            text-align: left;
+            border: 1px solid #ddd;
+        }
+        th {
+            background-color: #007bff;
+            color: white;
+        }
+    </style>
+</body>
+</html>

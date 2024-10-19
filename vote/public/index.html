@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login</title>
+    <link rel="stylesheet" href="assets/css/styles.css">
+</head>
+<body>
+    <header>
+        <img src="assets/img/ec.png" alt="">
+        <h1>E-vote by Election Commission of India</h1>
+    </header>
+    <section class="bg">
+        <div class="slider-container">
+            <div class="slider-nav">
+                <button id="prevBtn" class="sbutton active">Election Commission</button>
+                <button id="nextBtn" class="sbutton">Voter</button>
+            </div>
+        
+            <div class="forms">
+              <!-- Form 1 -->
+              <div class="form-section" id="form1">
+                
+                <form id="loginForm" method="POST" action="/login">
+                    <input type="text" name="username" id="username" placeholder="Username" required>
+                    <input type="password" name="password" id="password" placeholder="Password" required>
+                    <button type="submit">Login</button>
+                </form>
+              </div>
+        
+              <!-- Form 2 -->
+              <div class="form-section" id="form2">
+                
+                <form id="loginForm" action="/voterLogin" method="POST">
+                    <input type="text" name="voterId" placeholder="Voter ID" required>
+                    <input type="password" name="password" placeholder="Key" required>
+                    <button type="submit">Login</button>
+                </form>
+              </div>
+            </div>
+          </div>
+    </section>
+
+  
+
+  <script>
+    const formsContainer = document.querySelector('.forms');
+    const prevBtn = document.getElementById('prevBtn');
+    const nextBtn = document.getElementById('nextBtn');
+    
+    let currentFormIndex = 0;
+
+    // Function to update button states (active/inactive)
+    function updateButtonStates() {
+      if (currentFormIndex === 0) {
+        prevBtn.classList.add('active');
+        nextBtn.classList.remove('active');
+      } else if (currentFormIndex === 1) {
+        prevBtn.classList.remove('active');
+        nextBtn.classList.add('active');
+      }
+    }
+
+    // Navigate to the previous form
+    prevBtn.addEventListener('click', () => {
+      if (currentFormIndex > 0) {
+        currentFormIndex--;
+        formsContainer.style.transform = `translateX(-${currentFormIndex * 100}%)`;
+        updateButtonStates();
+      }
+    });
+
+    // Navigate to the next form
+    nextBtn.addEventListener('click', () => {
+      if (currentFormIndex < 1) {
+        currentFormIndex++;
+        formsContainer.style.transform = `translateX(-${currentFormIndex * 100}%)`;
+        updateButtonStates();
+      }
+    });
+
+    // Initial button state setup
+    updateButtonStates();
+  </script>
+
+</body>
+</html>

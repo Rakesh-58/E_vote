@@ -1,0 +1,112 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body{
+    background: rgb(255,103,31);
+    background: linear-gradient(90deg, rgba(255,103,31,1) 0%, rgba(255,255,255,1) 25%, rgba(255,255,255,1) 75%, rgba(4,106,56,1) 100%);
+}
+
+.bg {
+    font-family: Arial, sans-serif;
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+    justify-content: center;
+    align-items: center;
+    height: 80vh; 
+  }
+
+  header {
+    background-color: #ffffff;
+    min-height: 100px;
+    margin: 0;
+    padding: 0 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between; /* Distributes space between items */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+header img {
+    width: 80px;
+    margin-right: 20px;
+}
+
+header h1 {
+    margin-left: 20px;
+    flex-grow: 1; /* Pushes the title to the left */
+}
+header .left-content {
+    display: flex;
+    align-items: center;
+}
+header .right-content {
+    display: flex;
+    align-items: center;
+}
+
+header .right-content p {
+    margin: 0;
+    margin-right: 20px;
+    font-size: 16px;
+    color: #333;
+}
+
+header .right-content button {
+    padding: 10px 15px;
+    background-color: #ff4d4d;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+.container {
+    width: 600px;
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+.container h1 {
+    text-align: center;
+    color: #333;
+    margin-bottom: 20px;
+}
+.winner {
+    text-align: center;
+    font-weight: bold;
+    margin-bottom: 20px;
+    color: #007bff;
+}
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+}
+th, td {
+    padding: 12px 15px;
+    text-align: left;
+    border: 1px solid #ddd;
+}
+th {
+    background-color: #007bff;
+    color: #fff;
+}
+td {
+    background-color: #f9f9f9;
+}
+tr:hover td {
+    background-color: #f1f1f1;
+}
+
+.back-button{
+    text-decoration: none;
+    color: #000000;
+    margin: 100px;
+    border-radius: 5px;
+    background-color: rgb(206, 206, 206);
+    padding:8px;
+}
